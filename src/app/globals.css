@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('react-toastify/dist/ReactToastify.css');
+@import url('react-confirm-alert/src/react-confirm-alert.css');
+
+.scrollbar-thumb-purple-500 {
+  scrollbar-color: #d9f99d transparent;
+}
