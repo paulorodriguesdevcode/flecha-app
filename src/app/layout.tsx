@@ -7,9 +7,9 @@ import { UserProvider } from "./contexts/user-context";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "OSPRO - Sistema de Gestão de Clientes e Envio de Ordens de Serviço",
-  description: "OSPRO: Gerenciamento eficiente de clientes e envio de ordens de serviço por email. Melhore a organização e comunicação do seu negócio com OSPRO.",
-  keywords: ["OSPRO", "gestão de clientes", "envio de ordens de serviço", "sistema de ordens de serviço", "gerenciamento de clientes"],
+  title: "Flecha - Sistema de Gestão de Pessoas, Equipes e Metas",
+  description: "O Flecha é um sistema avançado para a gestão de pessoas, equipes e metas, facilitando o gerenciamento e a organização de suas operações.",
+  keywords: ["Flecha", "gestão de pessoas", "gestão de equipes", "gestão de metas", "gerenciamento de equipes"],
   authors: [
     { name: "Rodtech", url: "https://paulorodriguesdev.com.br/" },
     { name: "Paulo Rodrigues", url: "https://paulorodriguesdev.com.br/" },

@@ -1,7 +1,7 @@
 import "../../app/globals.css";
 import Navbar from "../components/common/Navbar";
 
-export default function CustomerLayout({
+export default function LeaderLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

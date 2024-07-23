@@ -1,20 +1,16 @@
-import { Customer } from "../types/customer";
 import * as XLSX from "xlsx";
+import { Team } from "../types/team";
 
-export async function exportCustomersToExcel(customers: Customer[]) {
+export async function exportTeamsToExcel(teams: Team[]) {
     try {
-        const data = customers.map(customer => ({
-            Nome: customer.name,
-            Email: customer.email,
-            Telefone: customer.phone,
-            Documento: customer.document,
-            "Data de cadastro": customer.createdAt ?? "",
-            Cidade: customer.city ?? ""
+        const data = teams.map(team => ({
+            Nome: team.name,
+            Id: team.id,
         }));
 
         const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
         const wb: XLSX.WorkBook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Customers");
+        XLSX.utils.book_append_sheet(wb, ws, "Leaders");
 
         const wbout: ArrayBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
 
@@ -22,12 +18,12 @@ export async function exportCustomersToExcel(customers: Customer[]) {
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "clientes.xlsx";
+        a.download = "teams.xlsx";
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     } catch (error) { 
-        console.error("Error exporting customers to Excel:", error);
+        console.error("Error exporting leaders to Excel:", error);
     }
 }

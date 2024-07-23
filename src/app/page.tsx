@@ -16,7 +16,7 @@ export default function Page() {
   useEffect(() => {
     const token = Cookies.get("token");
     if (token) {
-      router.push("/customers");
+      router.push("/leaders");
     }
   }, [router]);
 
@@ -46,7 +46,7 @@ export default function Page() {
 
       Cookies.set("token", data.access_token, { expires: 1 });
 
-      router.push("/customers");
+      router.push("/leaders");
     } catch (error) {
       console.error("Error:", error);
       toast.error(`Ocorreu um erro ao fazer login. ${error}`);

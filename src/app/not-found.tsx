@@ -6,7 +6,7 @@ export default function PageNotFound() {
   const router = useRouter();
 
   const handleGoHome = () => {
-    router.push("/customers");
+    router.push("/leaders");
   };
 
   return (

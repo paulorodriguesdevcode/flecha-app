@@ -1,26 +1,26 @@
 import Cookies from "js-cookie";
-import { Customer } from "../types/customer";
+import { Leader } from "../types/leader";
 import { logoff } from "../components/common/Logoff";
 
-export async function createCustomer(customer: Omit<Customer, "id">)  {
+export async function createLeader(leader: Omit<Leader, "id">)  {
     const token = Cookies.get("token");
 
-    const response = await fetch(`${process.env.API_URL}/customers`, {
+    const response = await fetch(`${process.env.API_URL}/leaders`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
         },
-        body: JSON.stringify(customer),
+        body: JSON.stringify(leader),
     });
 
     return response
 }
 
-export async function listCustomers()  {
+export async function listLeaders()  {
     const token = Cookies.get("token");
 
-    const response = await (await fetch(`${process.env.API_URL}/customers`, {
+    const response = await (await fetch(`${process.env.API_URL}/leaders`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -36,10 +36,10 @@ export async function listCustomers()  {
     return response
 }
 
-export async function deleteCustomer(id: string)  {
+export async function deleteLeader(id: string)  {
     const token = Cookies.get("token");
 
-    return await fetch(`${process.env.API_URL}/customers/${id}`, {
+    return await fetch(`${process.env.API_URL}/leaders/${id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -48,15 +48,15 @@ export async function deleteCustomer(id: string)  {
     });
 }
 
-export async function updateCustomer(customer:Customer)  {
+export async function updateLeader(leader:Leader)  {
     const token = Cookies.get("token");
 
-    return await fetch(`${process.env.API_URL}/customers/${customer.id}`, {
+    return await fetch(`${process.env.API_URL}/leaders/${leader.id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
         },
-        body: JSON.stringify(customer),
+        body: JSON.stringify(leader),
     });
 }

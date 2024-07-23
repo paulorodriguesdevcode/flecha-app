@@ -1,43 +1,37 @@
 import { useState, useEffect } from "react";
 import InputMask from "react-input-mask";
-import { createCustomer, updateCustomer } from "@/app/api/CustomersService";
-import { Customer } from "@/app/types/customer";
+import { createLeader, updateLeader } from "@/app/api/LeadersService";
+import { Leader } from "@/app/types/leader";
 import { toast } from "react-toastify";
 import Button from "../common/Button";
 
-interface CustomerModalProps {
+interface LeaderModalProps {
   isOpen: boolean;
   onClose: () => void;
-  updateCustomers: () => void;
-  initialCustomer?: Customer;
+  updateLeaders: () => void;
+  initialLeader?: Leader;
 }
 
-export default function CustomerModal({ isOpen, onClose, updateCustomers, initialCustomer }: CustomerModalProps) {
-  const [name, setName] = useState(initialCustomer?.name || "");
-  const [email, setEmail] = useState(initialCustomer?.email || "");
-  const [phone, setPhone] = useState(initialCustomer?.phone || "");
-  const [document, setDocument] = useState(initialCustomer?.document || "");
-  const [city, setCity] = useState(initialCustomer?.city || "");
+export default function LeaderModal({ isOpen, onClose, updateLeaders, initialLeader }: LeaderModalProps) {
+  const [name, setName] = useState(initialLeader?.name || "");
+  const [email, setEmail] = useState(initialLeader?.email || "");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [customer, setCustomer] = useState<Customer | undefined>(initialCustomer);
+  const [leader, setLeader] = useState<Leader | undefined>(initialLeader);
 
   useEffect(() => {
-    if (initialCustomer) {
-      setCustomer(initialCustomer);
+    if (initialLeader) {
+      setLeader(initialLeader);
     } else {
-      setCustomer(undefined);
+      setLeader(undefined);
     }
-  }, [initialCustomer]);
+  }, [initialLeader]);
 
   const resetModal = () => {
-    setDocument("");
     setEmail("");
     setName("");
-    setPhone("");
-    setCity("");
-    setCustomer(undefined);
+    setLeader(undefined);
   };
 
   const closeAndResetModal = () => { resetModal(); onClose() }
@@ -48,22 +42,22 @@ export default function CustomerModal({ isOpen, onClose, updateCustomers, initia
     setError("");
 
     try {
-      if (customer) {
-        await updateCustomer({ id: customer.id, document, email, name, phone, city });
-        toast.success("Cliente atualizado com sucesso!");
+      if (leader) {
+        await updateLeader({ id: leader.id, email, name });
+        toast.success("Lider atualizado com sucesso!");
       } else {
-        await createCustomer({ document, email, name, phone, city });
-        toast.success("Cliente criado com sucesso!");
+        await createLeader({ email, name });
+        toast.success("Lider criado com sucesso!");
       }
 
-      updateCustomers();
+      updateLeaders();
       resetModal();
       onClose();
     } catch (error: unknown) {
       if (error instanceof Error) {
         setError(error.message);
       } else {
-        setError("Erro ao salvar cliente");
+        setError("Erro ao salvar lider");
       }
     } finally {
       setLoading(false);
@@ -76,7 +70,7 @@ export default function CustomerModal({ isOpen, onClose, updateCustomers, initia
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-purple-950 bg-opacity-75">
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-xl mb-4 text-purple-950 font-bold uppercase">
-          {customer ? `Editar Cliente - ${customer?.name?.split(" ")[0]}` : "Cadastrar Novo Cliente"}
+          {leader ? `Editar lider - ${leader?.name?.split(" ")[0]}` : "Cadastrar Novo Lider"}
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -89,29 +83,7 @@ export default function CustomerModal({ isOpen, onClose, updateCustomers, initia
               className="w-full px-4 py-2 border rounded-lg focus:outline-purple-700 text-purple-900"
               required
             />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-purple-950 ">Telefone</label>
-            <InputMask
-              value={phone}
-              mask="(99) 9999-9999"
-              onChange={(e) => setPhone(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-purple-700 text-purple-900"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-purple-950">CNPJ</label>
-            <InputMask
-              mask="99.999.999/9999-99"
-              value={document}
-              onChange={(e) => setDocument(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-purple-700 text-purple-900"
-              required
-            />
-          </div>
+          </div>         
 
           <div className="mb-4">
             <label className="block text-purple-950">Email</label>
@@ -120,18 +92,6 @@ export default function CustomerModal({ isOpen, onClose, updateCustomers, initia
               type='email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-purple-700 text-purple-900"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-purple-950">Cidade</label>
-            <input
-              value={city}
-              maxLength={20}
-              onChange={(e) => setCity(e.target.value)}
-              type="text"
               className="w-full px-4 py-2 border rounded-lg focus:outline-purple-700 text-purple-900"
               required
             />
@@ -162,7 +122,7 @@ export default function CustomerModal({ isOpen, onClose, updateCustomers, initia
                   ></path>
                 </svg>
               ) : (
-                customer ? "Salvar" : "Cadastrar"
+                leader ? "Salvar" : "Cadastrar"
               )}
             </button>
             <Button text="Cancelar" onClick={closeAndResetModal} type="INFO" specialClass=""/>

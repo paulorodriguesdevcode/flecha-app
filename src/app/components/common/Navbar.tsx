@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { openConfirmationAlert } from "./ConfirmationAlert";
 import { logoff } from "./Logoff";
-import { ArrowRight, DoorOpenIcon, Euro, HouseIcon, ListIcon, Menu } from "lucide-react";
+import { DoorOpenIcon, Euro, Menu, PersonStandingIcon, Shield } from "lucide-react";
 
 const Navbar: React.FC = () => {
   const pathname = usePathname()
@@ -80,23 +80,38 @@ const Navbar: React.FC = () => {
         </div>
         <div className="m-4">
           <ul className="mb-4 flex flex-col gap-1 text-white">
-            <Link href='/customers' className={`${pathname === "/customers" ? ("shadow-md bg-gradient-to-tr") : ("")} middle none font-sans font-bold center transition-all`}>
+            {/* <Link href='/dashboard' className={`${pathname === "/leaders" ? ("shadow-md bg-gradient-to-tr") : ("")} middle none font-sans font-bold center transition-all`}>
               <li>
                 <button className="py-3 rounded-lg hover:shadow-lg hover:shadow-purple-900/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize" type="button">
-                  <HouseIcon/>
-                  <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Clientes</p>
+                  <LayoutDashboard/>
+                  <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Dashboard</p>
+                </button>
+              </li>
+            </Link> */}
+            <Link href='/leaders' className={`${pathname === "/leaders" ? ("shadow-md bg-gradient-to-tr") : ("")} middle none font-sans font-bold center transition-all`}>
+              <li>
+                <button className="py-3 rounded-lg hover:shadow-lg hover:shadow-purple-900/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize" type="button">
+                  <PersonStandingIcon/>
+                  <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Lideres</p>
                 </button>
               </li>
             </Link>
-            <Link href='/orders' className={`${pathname === "/orders" ? ("shadow-md bg-gradient-to-tr") : ("")} middle none font-sans font-bold center transition-all`}>
+            <Link href='/teams' className={`${pathname === "/teams" ? ("shadow-md bg-gradient-to-tr") : ("")} middle none font-sans font-bold center transition-all`}>
               <li>
                 <button className="py-3 rounded-lg hover:shadow-lg hover:shadow-purple-900/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize" type="button">
-                  <ListIcon/>
-                  <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">ordens de serviço</p>
+                  <Shield/>
+                  <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Equipes</p>
                 </button>
               </li>
             </Link>
-
+            {/* <Link href='/teams' className={`${pathname === "/teams" ? ("shadow-md bg-gradient-to-tr") : ("")} middle none font-sans font-bold center transition-all`}>
+              <li>
+                <button className="py-3 rounded-lg hover:shadow-lg hover:shadow-purple-900/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize" type="button">
+                  <Target/>
+                  <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Metas</p>
+                </button>
+              </li>
+            </Link> */}
           </ul>
         </div>
       </aside>
