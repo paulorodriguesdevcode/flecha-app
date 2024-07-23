@@ -4,13 +4,13 @@ export class Team {
     id: string
     name: string
     leader?: Leader
-    leaderId?: string
+    leaderIds?: string[]
 
-    constructor(id:string, name: string, leader: Leader, leaderId: string) {
+    constructor(id:string, name: string, leader: Leader, leaderIds: string[]) {
         this.id = id
         this.name = name
         this.leader = leader
-        this.leaderId = leaderId
+        this.leaderIds = leaderIds
         
     }
 }

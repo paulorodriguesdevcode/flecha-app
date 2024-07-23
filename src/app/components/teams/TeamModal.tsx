@@ -21,14 +21,14 @@ export default function TeamModal({ isOpen, onClose, updateTeams, initialTeam }:
   const [error, setError] = useState("");
   const [leader, setLeader] = useState<Team | undefined>(initialTeam);
   const [leaders, setLeaders] = useState<Leader[]>([]);
-  const [leaderId, setLeaderId] = useState("");
+  const [leaderIds, setLeaderId] = useState<string[]>([]);
 
   async function fetchLeaders() {
     try {
       const leaderFromDb = await listLeaders();
       setLeaders(leaderFromDb);
       if (leaderFromDb.length > 0) {
-        setLeaderId(leaderFromDb[0].id);
+        setLeaderId([leaderFromDb[0].id, ...leaderIds]);
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -66,10 +66,10 @@ export default function TeamModal({ isOpen, onClose, updateTeams, initialTeam }:
 
     try {
       if (leader) {
-        await updateTeam({ id, name, leaderId });
+        await updateTeam({ id, name, leaderIds });
         toast.success("Lider atualizado com sucesso!");
       } else {
-        await createTeam({name,leaderId});
+        await createTeam({name,leaderIds});
         toast.success("Lider criado com sucesso!");
       }
 
@@ -110,8 +110,8 @@ export default function TeamModal({ isOpen, onClose, updateTeams, initialTeam }:
           <div className="mb-4">
             <label className="block text-lime-950">Lider</label>
             <select
-              value={leaderId}
-              onChange={(e) => setLeaderId(e.target.value)}
+              value={leaderIds}
+              onChange={(e) => setLeaderId([e.target.value])}
               className="w-full px-4 py-2 border rounded-lg focus:outline-lime-700"
               required
             >
