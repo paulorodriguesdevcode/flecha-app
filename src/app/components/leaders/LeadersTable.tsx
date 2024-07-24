@@ -87,16 +87,15 @@ const LeadersTable: React.FC<LeadersTableProps> = ({ leaders, isLoading, updateL
                   </div>
                 </td>
                 <td className="py-3 px-5 border-b">
-                <div className="flex items-center gap-4 justify-center flex-wrap">
-      {leader?.teams?.map((team) => (
-        <span 
-          key={team.id} 
-          className="inline-block bg-purple-600 text-white text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
-          {team.name}
-        </span>
-      ))}
-    </div>
-
+                  <div className="flex items-center gap-4 justify-center flex-wrap">
+                    {leader?.teams?.map((team) => (
+                      <span
+                        key={team.id}
+                        className="inline-block bg-purple-600 text-white text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
+                        {team.name}
+                      </span>
+                    ))}
+                  </div>
                 </td>
                 <td className="py-3 px-5 border-b ">
                   <div className="flex space-x-2 justify-center">

@@ -4,6 +4,8 @@ import { createLeader, updateLeader } from "@/app/api/LeadersService";
 import { Leader } from "@/app/types/leader";
 import { toast } from "react-toastify";
 import Button from "../common/Button";
+import { listTeams } from "@/app/api/TeamsService";
+import { Team } from "@/app/types/team";
 
 interface LeaderModalProps {
   isOpen: boolean;
@@ -15,26 +17,52 @@ interface LeaderModalProps {
 export default function LeaderModal({ isOpen, onClose, updateLeaders, initialLeader }: LeaderModalProps) {
   const [name, setName] = useState(initialLeader?.name || "");
   const [email, setEmail] = useState(initialLeader?.email || "");
-
+  const [teamIds, setTeamIds] = useState<string[]>(initialLeader?.teamIds || []);
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [leader, setLeader] = useState<Leader | undefined>(initialLeader);
+  const [teams, setTeams] = useState<Team[]>([]);
 
   useEffect(() => {
     if (initialLeader) {
       setLeader(initialLeader);
+      setName(initialLeader.name);
+      setEmail(initialLeader.email);
+      setTeamIds(initialLeader.teamIds || []);
     } else {
       setLeader(undefined);
+      setName("");
+      setEmail("");
+      setTeamIds([]);
     }
   }, [initialLeader]);
 
+  useEffect(() => {
+    async function fetchTeams() {
+      try {
+        const teamsFromDb = await listTeams();
+        setTeams(teamsFromDb);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          toast.error(error.message);
+        } else {
+          toast.error("Erro ao tentar listar times");
+        }
+      }
+    }
+
+    fetchTeams();
+  }, []);
+
   const resetModal = () => {
-    setEmail("");
     setName("");
+    setEmail("");
+    setTeamIds([]);
     setLeader(undefined);
   };
 
-  const closeAndResetModal = () => { resetModal(); onClose() }
+  const closeAndResetModal = () => { resetModal(); onClose(); }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,11 +71,11 @@ export default function LeaderModal({ isOpen, onClose, updateLeaders, initialLea
 
     try {
       if (leader) {
-        await updateLeader({ id: leader.id, email, name });
-        toast.success("Lider atualizado com sucesso!");
+        await updateLeader({ id: leader.id, email, name, teamIds });
+        toast.success("Líder atualizado com sucesso!");
       } else {
-        await createLeader({ email, name });
-        toast.success("Lider criado com sucesso!");
+        await createLeader({ email, name, teamIds });
+        toast.success("Líder criado com sucesso!");
       }
 
       updateLeaders();
@@ -57,44 +85,71 @@ export default function LeaderModal({ isOpen, onClose, updateLeaders, initialLea
       if (error instanceof Error) {
         setError(error.message);
       } else {
-        setError("Erro ao salvar lider");
+        setError("Erro ao salvar líder");
       }
     } finally {
       setLoading(false);
     }
   };
 
+  const handleTeamChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked, value } = e.target;
+    setTeamIds(prevTeamIds => 
+      checked 
+        ? [...prevTeamIds, value] 
+        : prevTeamIds.filter(id => id !== value)
+    );
+  };
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-purple-950 bg-opacity-75">
-      <div className="bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-xl mb-4 text-purple-950 font-bold uppercase">
-          {leader ? `Editar lider - ${leader?.name?.split(" ")[0]}` : "Cadastrar Novo Lider"}
+      <div className="bg-white p-6 rounded-lg shadow-lg dark:bg-gray-800">
+        <h2 className="text-xl mb-4 text-purple-950 dark:text-purple-300 font-bold uppercase">
+          {leader ? `Editar líder - ${leader?.name?.split(" ")[0]}` : "Cadastrar Novo Líder"}
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-purple-950">Nome</label>
+            <label className="block text-purple-950 dark:text-purple-300">Nome</label>
             <input
               type="text"
               value={name}
               maxLength={20}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-purple-700 text-purple-900"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-purple-700 text-purple-900 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700"
               required
             />
-          </div>         
+          </div>
 
           <div className="mb-4">
-            <label className="block text-purple-950">Email</label>
+            <label className="block text-purple-950 dark:text-purple-300">Email</label>
             <InputMask
               mask=''
               type='email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-purple-700 text-purple-900"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-purple-700 text-purple-900 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700"
               required
             />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-purple-950 dark:text-purple-300">Times</label>
+            <div className="flex flex-wrap">
+              {teams.map(team => (
+                <div key={team.id} className="flex items-center mr-4 mb-2">
+                  <input
+                    type="checkbox"
+                    value={team.id}
+                    checked={teamIds.includes(team.id)}
+                    onChange={handleTeamChange}
+                    className="form-checkbox h-5 w-5 text-lime-600 dark:text-lime-300 dark:bg-gray-800 border-gray-300 rounded focus:ring-lime-500 dark:focus:ring-lime-300"
+                  />
+                  <label className="ml-2 text-lime-900 dark:text-lime-300">{team.name}</label>
+                </div>
+              ))}
+            </div>
           </div>
 
           {error && <p className="text-red-500 flex justify-center mb-4">{error}</p>}

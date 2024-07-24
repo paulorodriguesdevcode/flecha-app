@@ -63,7 +63,7 @@ const TeamsTable: React.FC<TeamsTableProps> = ({ teams, isLoading, updateTeams }
                 <p className="block font-sans text-purple-gray-400 dark:text-white">Nome</p>
               </th>
               <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
-                <p className="block font-sans text-purple-gray-400 dark:text-white">Lider</p>
+                <p className="block font-sans text-purple-gray-400 dark:text-white ">Lider(es)</p>
               </th>
               <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
                 <p className="block font-sans text-purple-gray-400 dark:text-white">Ações</p>
@@ -84,8 +84,14 @@ const TeamsTable: React.FC<TeamsTableProps> = ({ teams, isLoading, updateTeams }
                   </div>
                 </td>
                 <td className="py-3 px-5 border-b">
-                  <div className="flex items-center gap-4 justify-center">
-                    <p className="block font-sans text-sm leading-normal ">{team?.leader?.name}</p>
+                  <div className="flex items-center gap-4 justify-center flex-wrap">
+                    {team?.leaders?.map((leader) => (
+                      <span
+                        key={leader.id}
+                        className="inline-block bg-purple-600 text-white text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
+                        {leader.name}
+                      </span>
+                    ))}
                   </div>
                 </td>
                 <td className="py-3 px-5 border-b ">

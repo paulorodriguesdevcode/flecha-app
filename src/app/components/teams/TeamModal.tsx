@@ -16,48 +16,48 @@ interface TeamModalProps {
 export default function TeamModal({ isOpen, onClose, updateTeams, initialTeam }: TeamModalProps) {
   const [name, setName] = useState(initialTeam?.name || "");
   const [id, setId] = useState(initialTeam?.id || "");
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [leader, setLeader] = useState<Team | undefined>(initialTeam);
   const [leaders, setLeaders] = useState<Leader[]>([]);
-  const [leaderIds, setLeaderId] = useState<string[]>([]);
+  const [leaderIds, setLeaderIds] = useState<string[]>(initialTeam?.leaderIds || []);
+
+  useEffect(() => {
+    if (isOpen) {
+      fetchLeaders();
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (initialTeam) {
+      setName(initialTeam.name);
+      setId(initialTeam.id);
+      setLeaderIds(initialTeam.leaderIds || []);
+    }
+  }, [initialTeam]);
 
   async function fetchLeaders() {
     try {
-      const leaderFromDb = await listLeaders();
-      setLeaders(leaderFromDb);
-      if (leaderFromDb.length > 0) {
-        setLeaderId([leaderFromDb[0].id, ...leaderIds]);
-      }
+      const leadersFromDb = await listLeaders();
+      setLeaders(leadersFromDb);
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error(error.message);
       } else {
-        toast.error("Erro ao tentar listar lideres");
+        toast.error("Erro ao tentar listar líderes");
       }
     }
   }
 
-  useEffect(() => {
-    if (initialTeam) {
-      setLeader(initialTeam);
-    } else {
-      setLeader(undefined);
-    }
-  }, [initialTeam]);
-
-  useEffect(() => {
-    fetchLeaders();
-  }, []);
-
   const resetModal = () => {
     setId("");
     setName("");
-    setLeader(undefined);
+    setLeaderIds([]);
   };
 
-  const closeAndResetModal = () => { resetModal(); onClose() }
+  const closeAndResetModal = () => {
+    resetModal();
+    onClose();
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -65,17 +65,16 @@ export default function TeamModal({ isOpen, onClose, updateTeams, initialTeam }:
     setError("");
 
     try {
-      if (leader) {
+      if (id) {
         await updateTeam({ id, name, leaderIds });
-        toast.success("Lider atualizado com sucesso!");
+        toast.success("Equipe atualizada com sucesso!");
       } else {
-        await createTeam({name,leaderIds});
-        toast.success("Lider criado com sucesso!");
+        await createTeam({ name, leaderIds });
+        toast.success("Equipe criada com sucesso!");
       }
 
       updateTeams();
-      resetModal();
-      onClose();
+      closeAndResetModal();
     } catch (error: unknown) {
       if (error instanceof Error) {
         setError(error.message);
@@ -87,42 +86,53 @@ export default function TeamModal({ isOpen, onClose, updateTeams, initialTeam }:
     }
   };
 
+  const handleLeaderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked, value } = e.target;
+    setLeaderIds(prevLeaderIds => 
+      checked 
+        ? [...prevLeaderIds, value] 
+        : prevLeaderIds.filter(id => id !== value)
+    );
+  };
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-purple-950 bg-opacity-75">
-      <div className="bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-xl mb-4 text-purple-950 font-bold uppercase">
-          {leader ? `Editar lider - ${leader?.name?.split(" ")[0]}` : "Cadastrar Nova Equipe"}
+      <div className="bg-white p-6 rounded-lg shadow-lg dark:bg-gray-800">
+        <h2 className="text-xl mb-4 text-purple-950 dark:text-purple-300 font-bold uppercase">
+          {id ? `Editar equipe - ${name}` : "Cadastrar Nova Equipe"}
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-purple-950">Nome</label>
+            <label className="block text-purple-950 dark:text-purple-300">Nome</label>
             <input
               type="text"
               value={name}
               maxLength={20}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-purple-700 text-purple-900"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-purple-700 text-purple-900 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700"
               required
             />
-          </div>  
+          </div>
+
           <div className="mb-4">
-            <label className="block text-lime-950">Lider</label>
-            <select
-              value={leaderIds}
-              onChange={(e) => setLeaderId([e.target.value])}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-lime-700"
-              required
-            >
-              <option value="" disabled>Selecione um lider</option>
+            <label className="block text-lime-950 dark:text-lime-300">Líderes</label>
+            <div className="flex flex-wrap">
               {leaders.map(leader => (
-                <option value={leader.id} key={leader.id}>
-                  {leader.name}
-                </option>
+                <div key={leader.id} className="flex items-center mr-4 mb-2">
+                  <input
+                    type="checkbox"
+                    value={leader.id}
+                    checked={leaderIds.includes(leader.id)}
+                    onChange={handleLeaderChange}
+                    className="form-checkbox h-5 w-5 text-lime-600 dark:text-lime-300 dark:bg-gray-800 border-gray-300 rounded focus:ring-lime-500 dark:focus:ring-lime-300"
+                  />
+                  <label className="ml-2 text-lime-900 dark:text-lime-300">{leader.name}</label>
+                </div>
               ))}
-            </select>
-          </div>       
+            </div>
+          </div>
 
           {error && <p className="text-red-500 flex justify-center mb-4">{error}</p>}
           <div className="flex justify-end">
@@ -149,13 +159,13 @@ export default function TeamModal({ isOpen, onClose, updateTeams, initialTeam }:
                   ></path>
                 </svg>
               ) : (
-                leader ? "Salvar" : "Cadastrar"
+                id ? "Salvar" : "Cadastrar"
               )}
             </button>
-            <Button text="Cancelar" onClick={closeAndResetModal} type="INFO" specialClass=""/>
+            <Button text="Cancelar" onClick={closeAndResetModal} type="INFO" specialClass="" />
           </div>
         </form>
       </div>
     </div>
   );
-} 
+}
