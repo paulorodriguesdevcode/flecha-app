@@ -76,17 +76,17 @@ const LeadersTable: React.FC<LeadersTableProps> = ({ leaders, isLoading, updateL
           <tbody className='capitalize align-top'>
             {leaders?.map((leader, index) => (
               <tr key={index} className={index % 2 ? "dark:bg-purple-950" : ""}>
-                <td className="py-3 px-5 border-b">
+                <td className="py-3 px-5 border-b dark:border-none">
                   <div className="flex items-center gap-4 justify-center">
                     <p className="block font-sans text-sm leading-normal ">{leader.name}</p>
                   </div>
                 </td>
-                <td className="py-3 px-5 border-b">
+                <td className="py-3 px-5 border-b dark:border-none">
                   <div className="flex items-center gap-4 justify-center">
                     <p className="block font-sans text-sm leading-normal lowercase">{leader.email}</p>
                   </div>
                 </td>
-                <td className="py-3 px-5 border-b">
+                <td className="py-3 px-5 border-b dark:border-none">
                   <div className="flex items-center gap-4 justify-center flex-wrap">
                     {leader?.teams?.map((team) => (
                       <span
@@ -97,7 +97,7 @@ const LeadersTable: React.FC<LeadersTableProps> = ({ leaders, isLoading, updateL
                     ))}
                   </div>
                 </td>
-                <td className="py-3 px-5 border-b ">
+                <td className="py-3 px-5 border-b dark:border-none ">
                   <div className="flex space-x-2 justify-center">
                     <button onClick={() => openConfirmationAlert({
                       title: "Confirmar exclusão",
