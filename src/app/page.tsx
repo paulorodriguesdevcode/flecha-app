@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import { ThreeDots } from "react-loader-spinner";
-import Image from 'next/image';
-import logo from '../assets/logo.png';
+// import Image from 'next/image';
+// import logo from '../assets/logo.png';
 
 export default function Page() {
   const [email, setEmail] = useState("");
