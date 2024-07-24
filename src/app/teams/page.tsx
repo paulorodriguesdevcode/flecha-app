@@ -20,7 +20,6 @@ export default function Page() {
   async function fetchTeams() {
     try {
       const teamsFromDb = await listTeams();
-      console.log(teamsFromDb)
       setTeams(teamsFromDb);
 
     } catch (error: unknown) {
