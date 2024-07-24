@@ -64,12 +64,12 @@ export default function Page() {
           <div className="card bg-purple-200 shadow-lg w-full h-full rounded-3xl absolute transform rotate-3 bg-gradient-to-r  dark:from-purple-900 dark:via-purple-950 dark:to-black border-transparent" />
           <div className="relative w-full rounded-3xl px-12 py-10 bg-purple-50 shadow-md bg-gradient-to-r  dark:from-black dark:via-purple-950 dark:to-purple-900">
             <div className="flex justify-center mb-4">
-              <Image
+              {/* <Image
                 src={logo}
                 alt="Logo"
                 width={100}
                 height={100}
-              />
+              /> */}
             </div>
             <form onSubmit={handleLogin} className="mt-10 grid gap-2 ">
               <input type="email" required placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="focus:outline-purple-200 text-center block w-full bg-purple-50 h-11 rounded-xl shadow-lg hover:bg-purple-100 focus:bg-purple-100 focus:ring-0 pointer" />
