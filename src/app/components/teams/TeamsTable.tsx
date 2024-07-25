@@ -60,7 +60,7 @@ const TeamsTable: React.FC<TeamsTableProps> = ({ teams, isLoading, updateTeams }
                 <p className="block font-sans text-purple-gray-400 dark:text-white">Nome</p>
               </th>
               <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
-                <p className="block font-sans text-purple-gray-400 dark:text-white ">Lider(es)</p>
+                <p className="block font-sans text-purple-gray-400 dark:text-white ">Liderança</p>
               </th>
               <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
                 <p className="block font-sans text-purple-gray-400 dark:text-white">Ações</p>
