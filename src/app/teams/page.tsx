@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { Team } from "../types/team";
 import TeamModal from "../components/teams/TeamModal";
 import Button from "../components/common/Button";
+import { Shield } from "lucide-react";
 
 export default function Page() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -42,7 +43,7 @@ export default function Page() {
       <div className="p-4 xl:ml-80 ">
         <div className="mt-20">
           <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
-            <Card isLoading={isLoading} title="Total de equipes" value={teams?.length?.toString()} />
+            <Card isLoading={isLoading} title="Total de equipes" value={teams?.length?.toString()} icon={Shield}/>
           </div>
 
           <div className='flex-wrap'>

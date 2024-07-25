@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { openConfirmationAlert } from "./ConfirmationAlert";
 import { logoff } from "./Logoff";
-import { DoorOpenIcon, Euro, Menu, PersonStandingIcon, Shield } from "lucide-react";
+import { DoorOpenIcon, Euro, Goal, LayoutDashboard, Menu, Shield , Users } from "lucide-react";
 
 const Navbar: React.FC = () => {
   const pathname = usePathname()
@@ -80,18 +80,18 @@ const Navbar: React.FC = () => {
         </div>
         <div className="m-4">
           <ul className="mb-4 flex flex-col gap-1 text-white">
-            {/* <Link href='/dashboard' className={`${pathname === "/leaders" ? ("shadow-md bg-gradient-to-tr") : ("")} middle none font-sans font-bold center transition-all`}>
+            <Link href='/dashboard' className={`${pathname === "/leaders" ? ("shadow-md bg-gradient-to-tr") : ("")} middle none font-sans font-bold center transition-all`}>
               <li>
                 <button className="py-3 rounded-lg hover:shadow-lg hover:shadow-purple-900/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize" type="button">
                   <LayoutDashboard/>
                   <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Dashboard</p>
                 </button>
               </li>
-            </Link> */}
+            </Link>
             <Link href='/leaders' className={`${pathname === "/leaders" ? ("shadow-md bg-gradient-to-tr") : ("")} middle none font-sans font-bold center transition-all`}>
               <li>
                 <button className="py-3 rounded-lg hover:shadow-lg hover:shadow-purple-900/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize" type="button">
-                  <PersonStandingIcon/>
+                  <Users/>
                   <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Lideres</p>
                 </button>
               </li>
@@ -104,14 +104,14 @@ const Navbar: React.FC = () => {
                 </button>
               </li>
             </Link>
-            {/* <Link href='/teams' className={`${pathname === "/teams" ? ("shadow-md bg-gradient-to-tr") : ("")} middle none font-sans font-bold center transition-all`}>
+            <Link href='/goals' className={`${pathname === "/goals" ? ("shadow-md bg-gradient-to-tr") : ("")} middle none font-sans font-bold center transition-all`}>
               <li>
                 <button className="py-3 rounded-lg hover:shadow-lg hover:shadow-purple-900/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize" type="button">
-                  <Target/>
+                  <Goal/>
                   <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Metas</p>
                 </button>
               </li>
-            </Link> */}
+            </Link>
           </ul>
         </div>
       </aside>

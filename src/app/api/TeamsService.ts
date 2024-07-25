@@ -36,6 +36,25 @@ export async function listTeams()  {
     return response
 }
 
+export async function getTotalTeams()  {
+    const token = Cookies.get("token");
+
+    const response = await (await fetch(`${process.env.API_URL}/teams/total`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+        }
+    })).json();
+
+    if(response?.statusCode === 401){
+       logoff()
+        throw new Error("Sua sessão expirou, faça login novamente.")
+    }
+
+    return response
+}
+
 export async function deleteTeam(id: string)  {
     const token = Cookies.get("token");
 
