@@ -6,7 +6,7 @@ export async function exportGoalsToExcel(goals: Goal[]) {
         const data = goals.map(goal => ({
             Título: goal.title,
             Descrição: goal.description ?? "",
-            "Data de Conclusão": goal.dueDate.toISOString().split('T')[0],
+            "Data de Conclusão": new Date(goal.dueDate)?.toISOString()?.split('T')[0],
             Tipo: goal.type,
             "IDs de Referência": goal?.referenceIds?.join(", "),
         }));
