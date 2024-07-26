@@ -28,6 +28,7 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
   const [leaders, setLeaders] = useState<Leader[]>([]);
   const [teamIds, setTeamIds] = useState<string[]>(initialGoal?.teamIds || []);
 
+  console.log(teamIds)
   useEffect(() => {
     if (isOpen) {
       fetchTeams();
