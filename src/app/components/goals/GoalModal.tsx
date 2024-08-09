@@ -184,7 +184,6 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
                   <input
                     type="checkbox"
                     value={leader.id}
-                    // checked={referenceIds.includes(team.id)}
                     onChange={handleTeamChange}
                     className="form-checkbox h-5 w-5 text-lime-600 dark:text-lime-300 dark:bg-gray-800 border-gray-300 rounded focus:ring-lime-500 dark:focus:ring-lime-300"
                   />
@@ -197,7 +196,6 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
                   <input
                     type="checkbox"
                     value={team.id}
-                    // checked={referenceIds.includes(team.id)}
                     onChange={handleTeamChange}
                     className="form-checkbox h-5 w-5 text-lime-600 dark:text-lime-300 dark:bg-gray-800 border-gray-300 rounded focus:ring-lime-500 dark:focus:ring-lime-300"
                   />
