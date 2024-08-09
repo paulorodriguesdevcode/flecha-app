@@ -1,6 +1,12 @@
 import { Leader } from "./leader";
 import { Team } from "./team";
 
+export interface Progress {
+    goalId: string
+    referenceId: string
+    amount: number
+}
+
 export class Goal {
   id: string;
   title: string;
@@ -10,9 +16,12 @@ export class Goal {
   leaders?: Leader[];
   teams?: Team[];
   referenceIds?: string[];
+  referenceDetails?: Leader[] | Team[]
   isDeleted?: boolean;
   teamIds?: string[];
   result?: number
+  totalProgress?: number
+  progress?: Progress[]
 
   constructor(
     id: string,

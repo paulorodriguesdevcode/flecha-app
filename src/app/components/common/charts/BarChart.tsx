@@ -3,8 +3,8 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const BarChart = ({ data, options }:any) => {
-  return <Bar data={data} options={options} />;
+const BarChart = ({ data, options, className }:any) => {
+  return <Bar data={data} options={options} className={className} />;
 };
 
 export default BarChart;

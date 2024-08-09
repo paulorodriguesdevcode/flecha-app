@@ -26,9 +26,7 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
   const [error, setError] = useState("");
   const [teams, setTeams] = useState<Team[]>([]);
   const [leaders, setLeaders] = useState<Leader[]>([]);
-  const [teamIds, setTeamIds] = useState<string[]>(initialGoal?.teamIds || []);
 
-  console.log(teamIds)
   useEffect(() => {
     if (isOpen) {
       fetchTeams();
@@ -44,7 +42,6 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
       setType(initialGoal.type);
       setReferenceIds(initialGoal.referenceIds || []);
       setId(initialGoal.id);
-      setTeamIds(initialGoal.teamIds || []);
     }
   }, [initialGoal]);
 
@@ -81,7 +78,6 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
     setDueDate("");
     setType(undefined);
     setReferenceIds([]);
-    setTeamIds([]);
   };
 
   const closeAndResetModal = () => {
@@ -118,7 +114,6 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
 
   const handleTeamChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked, value } = e.target;
-    console.log('handleTeamChange', checked, value)
     setReferenceIds(prevTeamIds =>
       checked
         ? [...prevTeamIds, value]

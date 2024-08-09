@@ -63,13 +63,16 @@ const GoalsTable: React.FC<GoalsTableProps> = ({ goals, isLoading, updateGoals }
                 <p className="block font-sans text-purple-gray-400 dark:text-white ">Descrição</p>
               </th>
               <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
-                <p className="block font-sans text-purple-gray-400 dark:text-white ">Vencimento</p>
-              </th>
-              <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
                 <p className="block font-sans text-purple-gray-400 dark:text-white ">Tipo</p>
               </th>
               <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
                 <p className="block font-sans text-purple-gray-400 dark:text-white ">Responsáveis</p>
+              </th>
+              <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
+                <p className="block font-sans text-purple-gray-400 dark:text-white ">Alcançado</p>
+              </th>
+              <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
+                <p className="block font-sans text-purple-gray-400 dark:text-white ">Vencimento</p>
               </th>
               <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
                 <p className="block font-sans text-purple-gray-400 dark:text-white">Ações</p>
@@ -81,7 +84,7 @@ const GoalsTable: React.FC<GoalsTableProps> = ({ goals, isLoading, updateGoals }
               <tr key={index} className={index % 2 ? "dark:bg-purple-950" : ""}>
                 <td className="py-3 px-5 border-b dark:border-none">
                   <div className="flex items-center gap-4 justify-center">
-                    <p className="block font-sans text-sm leading-normal ">{goal.type === 'leader' ? ('Lider: ' + goal.title) : ('Equipe: ' + goal.title)}</p>
+                    <p className="block font-sans text-sm leading-normal ">{goal.title}</p>
                   </div >
                 </td>
 
@@ -90,40 +93,33 @@ const GoalsTable: React.FC<GoalsTableProps> = ({ goals, isLoading, updateGoals }
                     <p className="block font-sans text-sm leading-normal ">{goal.description}</p>
                   </div>
                 </td>
-
-                <td className="py-3 px-5 border-b dark:border-none">
-                  <div className="flex items-center gap-4 justify-center">
-                    <p className="block font-sans text-sm leading-normal">
-                      {(new Date(goal.dueDate)).toLocaleDateString('pt-BR', {day: '2-digit',month: '2-digit',year: "numeric"})}
-                    </p>
-                  </div>
-                </td>
-
-
+                
                 <td className="py-3 px-5 border-b dark:border-none">
                   <div className="flex items-center gap-4 justify-center">
                     <p className="block font-sans text-sm leading-normal ">{goal.type === 'leader' ? ("Pessoal") : ("Time")}</p>
                   </div>
                 </td>
-
-
-
                 <td className="py-3 px-5 border-b dark:border-none">
                   <div className="flex items-center gap-4 justify-center flex-wrap">
-                    {goal?.teams?.map((team) => (
+                    {goal?.referenceDetails?.map((reference) => (
                       <span
-                        key={team.id}
+                        key={reference.id}
                         className="inline-block bg-purple-600 text-white text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
-                        {team.name}
+                        {reference.name}
                       </span>
                     ))}
-                    {goal?.leaders?.map((leader) => (
-                      <span
-                        key={leader.id}
-                        className="inline-block bg-purple-600 text-white text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
-                        {leader.name}
-                      </span>
-                    ))}
+                  </div>
+                </td>
+                <td className="py-3 px-5 border-b dark:border-none">
+                  <div className="flex items-center gap-4 justify-center flex-wrap">
+                    { goal?.totalProgress }
+                  </div>
+                </td>
+                <td className="py-3 px-5 border-b dark:border-none">
+                  <div className="flex items-center gap-4 justify-center">
+                    <p className="block font-sans text-sm leading-normal">
+                      {(new Date(goal.dueDate)).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: "numeric" })}
+                    </p>
                   </div>
                 </td>
                 <td className="py-3 px-5 border-b dark:border-none ">

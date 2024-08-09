@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { Goal } from "../types/goal";
+import { Goal, Progress } from "../types/goal";
 import { logoff } from "../components/common/Logoff";
 
 export async function createGoal(goal: Omit<Goal, "id">) {
@@ -77,5 +77,19 @@ export async function updateGoal(goal: Goal) {
       "Authorization": `Bearer ${token}`,
     },
     body: JSON.stringify(goal),
+  });
+}
+
+
+export async function addProgress(progress: Progress) {
+  const token = Cookies.get("token");
+
+  return await fetch(`${process.env.API_URL}/goals/add-progress`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
+    body: JSON.stringify(progress),
   });
 }
