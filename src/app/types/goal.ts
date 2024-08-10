@@ -2,6 +2,7 @@ import { Leader } from "./leader";
 import { Team } from "./team";
 
 export interface Progress {
+    _id?: string  
     goalId: string
     referenceId: string
     amount: number
@@ -22,6 +23,7 @@ export class Goal {
   result?: number
   totalProgress?: number
   progress?: Progress[]
+  expectedGoal?: number
 
   constructor(
     id: string,
@@ -33,7 +35,8 @@ export class Goal {
     leaders?: Leader[],
     teams?: Team[],
     isDeleted?: boolean,
-    teamIds?: string[]
+    teamIds?: string[],
+    expectedGoal?: number
   ) {
     this.id = id;
     this.title = title;
@@ -45,5 +48,6 @@ export class Goal {
     this.teams = teams;
     this.isDeleted = isDeleted;
     this.teamIds = teamIds;
+    this.expectedGoal = expectedGoal;
   }
 }

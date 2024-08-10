@@ -60,6 +60,9 @@ const GoalsTable: React.FC<GoalsTableProps> = ({ goals, isLoading, updateGoals }
                 <p className="block font-sans text-purple-gray-400 dark:text-white">Nome</p>
               </th>
               <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
+                <p className="block font-sans text-purple-gray-400 dark:text-white ">Meta</p>
+              </th>
+              <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
                 <p className="block font-sans text-purple-gray-400 dark:text-white ">Descrição</p>
               </th>
               <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
@@ -85,6 +88,12 @@ const GoalsTable: React.FC<GoalsTableProps> = ({ goals, isLoading, updateGoals }
                 <td className="py-3 px-5 border-b dark:border-none">
                   <div className="flex items-center gap-4 justify-center">
                     <p className="block font-sans text-sm leading-normal ">{goal.title}</p>
+                  </div >
+                </td>
+
+                <td className="py-3 px-5 border-b dark:border-none">
+                  <div className="flex items-center gap-4 justify-center">
+                    <p className="block font-sans text-sm leading-normal ">{goal.expectedGoal}</p>
                   </div >
                 </td>
 

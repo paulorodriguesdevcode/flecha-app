@@ -19,6 +19,8 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
   const [title, setTitle] = useState(initialGoal?.title || "");
   const [description, setDescription] = useState<string | undefined>(initialGoal?.description || "");
   const [dueDate, setDueDate] = useState(initialGoal?.dueDate || "");
+  const [expectedGoal, setExpectedGoal] = useState<number>(initialGoal?.expectedGoal || 0);
+  
   const [type, setType] = useState<"leader" | "team" | undefined | string>(initialGoal?.type || "");
   const [referenceIds, setReferenceIds] = useState(initialGoal?.referenceIds || []);
   const [id, setId] = useState(initialGoal?.id || "");
@@ -78,6 +80,7 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
     setDueDate("");
     setType(undefined);
     setReferenceIds([]);
+    setExpectedGoal(0)
   };
 
   const closeAndResetModal = () => {
@@ -95,7 +98,7 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
         await updateGoal({ id, title, description, dueDate, type, referenceIds });
         toast.success("Meta atualizada com sucesso!");
       } else {
-        await createGoal({ title, description, dueDate, type, referenceIds });
+        await createGoal({ title, description, dueDate, type, referenceIds, expectedGoal });
         toast.success("Meta criada com sucesso!");
       }
 
@@ -146,6 +149,16 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-purple-700 text-purple-900 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-purple-950 dark:text-purple-300">Meta</label>
+            <input
+              type="number"
+              value={expectedGoal}
+              onChange={(e) => setExpectedGoal(Number(e.target.value))}
               className="w-full px-4 py-2 border rounded-lg focus:outline-purple-700 text-purple-900 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700"
               required
             />

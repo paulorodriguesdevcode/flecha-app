@@ -106,7 +106,7 @@ export default function GoalModal({ isOpen, onClose, goals, fetchGoals}: GoalMod
           </div>
 
           <div className="flex justify-end">
-            <button type="submit">cadastrar</button>
+            <button className="bg-gradient-to-tr from-purple-700 to-purple-950 hover:from-purple-500 hover:to-purple-750 text-white font-bold rounded-lg px-4 py-2" type="submit">cadastrar</button>
             <Button text="Cancelar" onClick={closeAndResetModal} type="INFO" specialClass="ml-10" />
           </div>
         </form>
