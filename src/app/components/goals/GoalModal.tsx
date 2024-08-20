@@ -174,14 +174,14 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
             />
           </div>
           <div className="mb-4">
-            <label className="block text-purple-950 dark:text-purple-300">Tipo</label>
+            <label className="block text-purple-950 dark:text-purple-300">Alvo</label>
             <select
               value={target}
               onChange={(e) => setTarget(e.target.value)}
               className="w-full px-4 py-2 border rounded-lg focus:outline-purple-700 text-purple-900 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700"
               required
             >
-              <option value="" >Selecione o tipo</option>
+              <option value="" >Selecione o alvo</option>
               <option value="leader">Líder</option>
               <option value="team">Equipe</option>
             </select>

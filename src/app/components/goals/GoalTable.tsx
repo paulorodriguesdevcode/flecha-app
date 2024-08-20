@@ -66,7 +66,7 @@ const GoalsTable: React.FC<GoalsTableProps> = ({ goals, isLoading, updateGoals }
                 <p className="block font-sans text-purple-gray-400 dark:text-white ">Descrição</p>
               </th>
               <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
-                <p className="block font-sans text-purple-gray-400 dark:text-white ">Tipo</p>
+                <p className="block font-sans text-purple-gray-400 dark:text-white ">Alvo</p>
               </th>
               <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
                 <p className="block font-sans text-purple-gray-400 dark:text-white ">Responsáveis</p>
