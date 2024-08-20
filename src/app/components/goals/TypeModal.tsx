@@ -1,57 +1,33 @@
 import { useState, useEffect } from "react";
-import { createTeam, updateTeam } from "@/app/api/TeamsService";
-import { Team } from "@/app/types/team";
+import { createType, updateType } from "@/app/api/TypesService";
+import { GoalType } from "@/app/types/goal";
 import { toast } from "react-toastify";
 import Button from "../common/Button";
-import { listLeaders } from "@/app/api/LeadersService";
-import { Leader } from "@/app/types/leader";
 
-interface TeamModalProps {
+interface TypeModalProps {
   isOpen: boolean;
   onClose: () => void;
-  updateTeams: () => void;
-  initialTeam?: Team;
+  updateTypes: () => void;
+  initialType?: GoalType;
 }
 
-export default function TeamModal({ isOpen, onClose, updateTeams, initialTeam }: TeamModalProps) {
-  const [name, setName] = useState(initialTeam?.name || "");
-  const [id, setId] = useState(initialTeam?.id || "");
+export default function TypeModal({ isOpen, onClose, updateTypes, initialType }: TypeModalProps) {
+  const [name, setName] = useState(initialType?.name || undefined);
+  const [description, setDescription] = useState(initialType?.description || undefined);
+  const [id, setId] = useState(initialType?.id || undefined);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [leaders, setLeaders] = useState<Leader[]>([]);
-  const [leaderIds, setLeaderIds] = useState<string[]>(initialTeam?.leaderIds || []);
 
   useEffect(() => {
-    if (isOpen) {
-      fetchLeaders();
+    if (initialType) {
+      setName(initialType?.name);
+      setId(initialType?.id);
     }
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (initialTeam) {
-      setName(initialTeam.name);
-      setId(initialTeam.id);
-      setLeaderIds(initialTeam.leaderIds || []);
-    }
-  }, [initialTeam]);
-
-  async function fetchLeaders() {
-    try {
-      const leadersFromDb = await listLeaders();
-      setLeaders(leadersFromDb);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error("Erro ao tentar listar líderes");
-      }
-    }
-  }
+  }, [initialType]);
 
   const resetModal = () => {
     setId("");
     setName("");
-    setLeaderIds([]);
   };
 
   const closeAndResetModal = () => {
@@ -66,33 +42,24 @@ export default function TeamModal({ isOpen, onClose, updateTeams, initialTeam }:
 
     try {
       if (id) {
-        await updateTeam({ id, name, leaderIds });
-        toast.success("Equipe atualizada com sucesso!");
+        await updateType({ id, name });
+        toast.success("Tipo atualizado com sucesso!");
       } else {
-        await createTeam({ name, leaderIds });
-        toast.success("Equipe criada com sucesso!");
+        await createType({ name, description });
+        toast.success("Tipo criado com sucesso!");
       }
 
-      updateTeams();
+      updateTypes();
       closeAndResetModal();
     } catch (error: unknown) {
       if (error instanceof Error) {
         setError(error.message);
       } else {
-        setError("Erro ao salvar equipe");
+        setError("Erro ao salvar tipo");
       }
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleLeaderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked, value } = e.target;
-    setLeaderIds(prevLeaderIds => 
-      checked
-        ? [...prevLeaderIds, value] 
-        : prevLeaderIds.filter(id => id !== value)
-    );
   };
 
   if (!isOpen) return null;
@@ -101,7 +68,7 @@ export default function TeamModal({ isOpen, onClose, updateTeams, initialTeam }:
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-purple-950 bg-opacity-75">
       <div className="bg-white p-6 rounded-lg shadow-lg dark:bg-gray-800">
         <h2 className="text-xl mb-4 text-purple-950 dark:text-purple-300 font-bold uppercase">
-          {id ? `Editar equipe - ${name}` : "Cadastrar Nova Equipe"}
+          {id ? `Editar Tipo - ${name}` : "Cadastrar Novo Tipo"}
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -117,21 +84,14 @@ export default function TeamModal({ isOpen, onClose, updateTeams, initialTeam }:
           </div>
 
           <div className="mb-4">
-            <label className="block text-lime-950 dark:text-lime-300">Líderes</label>
-            <div className="flex flex-wrap">
-              {leaders.map(leader => (
-                <div key={leader.id} className="flex items-center mr-4 mb-2">
-                  <input
-                    type="checkbox"
-                    value={leader.id}
-                    checked={leaderIds.includes(leader.id)}
-                    onChange={handleLeaderChange}
-                    className="form-checkbox h-5 w-5 text-lime-600 dark:text-lime-300 dark:bg-gray-800 border-gray-300 rounded focus:ring-lime-500 dark:focus:ring-lime-300"
-                  />
-                  <label className="ml-2 text-lime-900 dark:text-lime-300">{leader.name}</label>
-                </div>
-              ))}
-            </div>
+            <label className="block text-purple-950 dark:text-purple-300">Descrição</label>
+            <input
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-purple-700 text-purple-900 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700"
+              required
+            />
           </div>
 
           {error && <p className="text-red-500 flex justify-center mb-4">{error}</p>}

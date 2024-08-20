@@ -24,6 +24,7 @@ export class Goal {
   totalProgress?: number
   progress?: Progress[]
   expectedGoal?: number
+  type?: GoalType
 
   constructor(
     id: string,
@@ -36,7 +37,8 @@ export class Goal {
     teams?: Team[],
     isDeleted?: boolean,
     teamIds?: string[],
-    expectedGoal?: number
+    expectedGoal?: number,
+    type?: GoalType
   ) {
     this.id = id;
     this.title = title;
@@ -49,5 +51,15 @@ export class Goal {
     this.isDeleted = isDeleted;
     this.teamIds = teamIds;
     this.expectedGoal = expectedGoal;
+    this.type = type;
   }
+}
+
+
+
+export interface GoalType {
+  _id?: string  
+  id?: string  
+  name?: string
+  description?: string
 }
