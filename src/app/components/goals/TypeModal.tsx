@@ -28,6 +28,7 @@ export default function TypeModal({ isOpen, onClose, updateTypes, initialType }:
   const resetModal = () => {
     setId("");
     setName("");
+    setDescription("");
   };
 
   const closeAndResetModal = () => {
