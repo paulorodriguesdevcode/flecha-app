@@ -13,7 +13,7 @@ export class Goal {
   title: string;
   description?: string;
   dueDate: string;
-  type?: 'leader' | 'team' | string;
+  target?: 'leader' | 'team' | string;
   leaders?: Leader[];
   teams?: Team[];
   referenceIds?: string[];
@@ -29,7 +29,7 @@ export class Goal {
     id: string,
     title: string,
     dueDate: string,
-    type: 'leader' | 'team',
+    target: 'leader' | 'team',
     referenceIds: string[],
     description?: string,
     leaders?: Leader[],
@@ -42,7 +42,7 @@ export class Goal {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
-    this.type = type;
+    this.target = target;
     this.referenceIds = referenceIds;
     this.leaders = leaders;
     this.teams = teams;

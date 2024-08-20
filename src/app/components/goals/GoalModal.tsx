@@ -21,7 +21,7 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
   const [dueDate, setDueDate] = useState(initialGoal?.dueDate || "");
   const [expectedGoal, setExpectedGoal] = useState<number>(initialGoal?.expectedGoal || 0);
   
-  const [type, setType] = useState<"leader" | "team" | undefined | string>(initialGoal?.type || "");
+  const [target, setTarget] = useState<"leader" | "team" | undefined | string>(initialGoal?.target || "");
   const [referenceIds, setReferenceIds] = useState(initialGoal?.referenceIds || []);
   const [id, setId] = useState(initialGoal?.id || "");
   const [loading, setLoading] = useState(false);
@@ -41,7 +41,7 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
       setTitle(initialGoal.title);
       setDescription(initialGoal.description);
       setDueDate(initialGoal.dueDate);
-      setType(initialGoal.type);
+      setTarget(initialGoal.target);
       setReferenceIds(initialGoal.referenceIds || []);
       setId(initialGoal.id);
     }
@@ -78,7 +78,7 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
     setTitle("");
     setDescription("");
     setDueDate("");
-    setType(undefined);
+    setTarget(undefined);
     setReferenceIds([]);
     setExpectedGoal(0)
   };
@@ -95,10 +95,10 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
 
     try {
       if (id) {
-        await updateGoal({ id, title, description, dueDate, type, referenceIds });
+        await updateGoal({ id, title, description, dueDate, target, referenceIds });
         toast.success("Meta atualizada com sucesso!");
       } else {
-        await createGoal({ title, description, dueDate, type, referenceIds, expectedGoal });
+        await createGoal({ title, description, dueDate, target, referenceIds, expectedGoal });
         toast.success("Meta criada com sucesso!");
       }
 
@@ -176,8 +176,8 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
           <div className="mb-4">
             <label className="block text-purple-950 dark:text-purple-300">Tipo</label>
             <select
-              value={type}
-              onChange={(e) => setType(e.target.value)}
+              value={target}
+              onChange={(e) => setTarget(e.target.value)}
               className="w-full px-4 py-2 border rounded-lg focus:outline-purple-700 text-purple-900 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700"
               required
             >
@@ -192,7 +192,7 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
             <label className="block text-lime-950 dark:text-lime-300">Referências</label>
             <div className="flex flex-wrap">
 
-              {type === 'leader' && (leaders.map(leader => (
+              {target === 'leader' && (leaders.map(leader => (
                 <div key={leader.id} className="flex items-center mr-4 mb-2">
                   <input
                     type="checkbox"
@@ -204,7 +204,7 @@ export default function GoalModal({ isOpen, onClose, updateGoals, initialGoal }:
                 </div>
               )))}
 
-              {type === 'team' && (teams.map(team => (
+              {target === 'team' && (teams.map(team => (
                 <div key={team.id} className="flex items-center mr-4 mb-2">
                   <input
                     type="checkbox"
