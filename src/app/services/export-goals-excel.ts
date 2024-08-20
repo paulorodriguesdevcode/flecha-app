@@ -7,7 +7,7 @@ export async function exportGoalsToExcel(goals: Goal[]) {
             Título: goal.title,
             Descrição: goal.description ?? "",
             "Data de Conclusão": new Date(goal.dueDate)?.toISOString()?.split('T')[0],
-            Tipo: goal.type,
+            Tipo: goal.target,
             "IDs de Referência": goal?.referenceIds?.join(", "),
         }));
 

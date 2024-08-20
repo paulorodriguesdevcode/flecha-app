@@ -105,7 +105,7 @@ const GoalsTable: React.FC<GoalsTableProps> = ({ goals, isLoading, updateGoals }
                 
                 <td className="py-3 px-5 border-b dark:border-none max">
                   <div className="flex items-center gap-4 justify-center">
-                    <p className="block font-sans text-sm leading-normal ">{goal.type === 'leader' ? ("Pessoal") : ("Time")}</p>
+                    <p className="block font-sans text-sm leading-normal ">{goal.target === 'leader' ? ("Pessoal") : ("Time")}</p>
                   </div>
                 </td>
                 <td className="py-3 px-5 border-b dark:border-none">
