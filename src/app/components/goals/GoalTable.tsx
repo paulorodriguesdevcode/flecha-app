@@ -103,13 +103,13 @@ const GoalsTable: React.FC<GoalsTableProps> = ({ goals, isLoading, updateGoals }
                   </div>
                 </td>
                 
-                <td className="py-3 px-5 border-b dark:border-none">
+                <td className="py-3 px-5 border-b dark:border-none max">
                   <div className="flex items-center gap-4 justify-center">
                     <p className="block font-sans text-sm leading-normal ">{goal.type === 'leader' ? ("Pessoal") : ("Time")}</p>
                   </div>
                 </td>
                 <td className="py-3 px-5 border-b dark:border-none">
-                  <div className="flex items-center gap-4 justify-center flex-wrap">
+                  <div className="flex flex-wrap items-center gap-4 justify-center max-h-12 overflow-y-auto" title={ JSON.stringify(goal?.referenceDetails?.map(item => item.name).join(','))}>
                     {goal?.referenceDetails?.map((reference) => (
                       <span
                         key={reference.id}
