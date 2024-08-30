@@ -43,7 +43,7 @@ export default function TypeModal({ isOpen, onClose, updateTypes, initialType }:
 
     try {
       if (id) {
-        await updateType({ id, name });
+        await updateType({ id, name, description });
         toast.success("Tipo atualizado com sucesso!");
       } else {
         await createType({ name, description });

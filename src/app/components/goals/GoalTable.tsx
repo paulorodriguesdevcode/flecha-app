@@ -56,6 +56,9 @@ const GoalsTable: React.FC<GoalsTableProps> = ({ goals, isLoading, updateGoals }
         <table className="w-full h-full">
           <thead className='bg-purple-200 uppercase dark:bg-gradient-to-tr dark:from-purple-700 dark:to-purple-950 '>
             <tr className='text-purple-950 text-[15px]'>
+            <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
+                <p className="block font-sans text-purple-gray-400 dark:text-white">Tipo</p>
+              </th>
               <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
                 <p className="block font-sans text-purple-gray-400 dark:text-white">Nome</p>
               </th>
@@ -85,6 +88,12 @@ const GoalsTable: React.FC<GoalsTableProps> = ({ goals, isLoading, updateGoals }
           <tbody className='capitalize align-top'>
             {goals?.map((goal, index) => (
               <tr key={index} className={index % 2 ? "dark:bg-purple-950" : ""}>
+                <td className="py-3 px-5 border-b dark:border-none">
+                  <div className="flex items-center gap-4 justify-center">
+                    <p className="block font-sans text-sm leading-normal ">{goal.type}</p>
+                  </div >
+                </td>
+
                 <td className="py-3 px-5 border-b dark:border-none">
                   <div className="flex items-center gap-4 justify-center">
                     <p className="block font-sans text-sm leading-normal ">{goal.title}</p>
