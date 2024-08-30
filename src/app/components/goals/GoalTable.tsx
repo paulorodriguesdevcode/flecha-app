@@ -56,7 +56,7 @@ const GoalsTable: React.FC<GoalsTableProps> = ({ goals, isLoading, updateGoals }
         <table className="w-full h-full">
           <thead className='bg-purple-200 uppercase dark:bg-gradient-to-tr dark:from-purple-700 dark:to-purple-950 '>
             <tr className='text-purple-950 text-[15px]'>
-            <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
+              <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
                 <p className="block font-sans text-purple-gray-400 dark:text-white">Tipo</p>
               </th>
               <th className="border-b border-purple-gray-50 dark:border-transparent py-3 px-6 text-center">
@@ -90,7 +90,9 @@ const GoalsTable: React.FC<GoalsTableProps> = ({ goals, isLoading, updateGoals }
               <tr key={index} className={index % 2 ? "dark:bg-purple-950" : ""}>
                 <td className="py-3 px-5 border-b dark:border-none">
                   <div className="flex items-center gap-4 justify-center">
-                    <p className="block font-sans text-sm leading-normal ">{goal.type}</p>
+                    <p className="block font-sans text-sm leading-normal ">
+                      {goal.type ? String(goal.type) : ''}
+                    </p>
                   </div >
                 </td>
 
@@ -111,14 +113,14 @@ const GoalsTable: React.FC<GoalsTableProps> = ({ goals, isLoading, updateGoals }
                     <p className="block font-sans text-sm leading-normal ">{goal.description}</p>
                   </div>
                 </td>
-                
+
                 <td className="py-3 px-5 border-b dark:border-none max">
                   <div className="flex items-center gap-4 justify-center">
                     <p className="block font-sans text-sm leading-normal ">{goal.target === 'leader' ? ("Pessoal") : ("Time")}</p>
                   </div>
                 </td>
                 <td className="py-3 px-5 border-b dark:border-none">
-                  <div className="flex flex-wrap items-center gap-4 justify-center max-h-12 overflow-y-auto" title={ JSON.stringify(goal?.referenceDetails?.map(item => item.name).join(','))}>
+                  <div className="flex flex-wrap items-center gap-4 justify-center max-h-12 overflow-y-auto" title={JSON.stringify(goal?.referenceDetails?.map(item => item.name).join(','))}>
                     {goal?.referenceDetails?.map((reference) => (
                       <span
                         key={reference.id}
@@ -130,7 +132,7 @@ const GoalsTable: React.FC<GoalsTableProps> = ({ goals, isLoading, updateGoals }
                 </td>
                 <td className="py-3 px-5 border-b dark:border-none">
                   <div className="flex items-center gap-4 justify-center flex-wrap">
-                    { goal?.totalProgress }
+                    {goal?.totalProgress}
                   </div>
                 </td>
                 <td className="py-3 px-5 border-b dark:border-none">
